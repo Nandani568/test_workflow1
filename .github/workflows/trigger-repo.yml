@@ -1,29 +1,24 @@
-name: Trigger Another Repository Workflow
-
+name: Publish to NPM
 on:
-  push:
-    branches:
-      - main
-
+  repository_dispatch:
+    types: [dispatch]
+    
 jobs:
-  trigger-other-repo:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Trigger Workflow in Another Repository
-        uses: actions/github-script@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
         with:
-          script: |
-            const octokit = require("@octokit/rest")();
-            octokit.authenticate({
-              type: "token",
-              token: "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"
-            });
-            octokit.repos.createDispatchEvent({
-              owner: "Nandani568",
-              repo: "test_workflow",
-              event_type: "run-workflow",
-              client_payload: {
-                workflow_id: 4352206 # Replace this with the ID of the workflow you want to trigger
-              }
-            });
+          node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org/'
+      - name: Install dependencies
+        run: npm install
+      - name: build 🔧
+        run: npm run build
+      - name: Publish package on NPM 📦
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
