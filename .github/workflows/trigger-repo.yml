@@ -16,8 +16,8 @@ jobs:
           script: |
             const octokit = require("@octokit/rest")();
             octokit.authenticate({
-              type: "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",
-              token: "${{ secrets.GITHUB_TOKEN }}"
+              type: "token",
+              token: "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"
             });
             octokit.repos.createDispatchEvent({
               owner: "syedyaseenabbas",
