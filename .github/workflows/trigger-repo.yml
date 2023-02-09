@@ -16,7 +16,7 @@ jobs:
           script: |
             const octokit = require("@octokit/rest")();
             octokit.authenticate({
-              type: "token",
+              type: "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",
               token: "${{ secrets.GITHUB_TOKEN }}"
             });
             octokit.repos.createDispatchEvent({
