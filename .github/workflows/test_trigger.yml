@@ -1,0 +1,35 @@
+name: Trigger Another Repository Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-other-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          repository: syedyaseenabbas/github-actions
+
+      - name: Trigger Workflow in Another Repository
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const octokit = require("@octokit/rest")();
+            octokit.authenticate({
+              type: "token",
+              token: "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"
+            });
+            octokit.repos.createDispatchEvent({
+              owner: "syedyaseenabbas",
+              repo: "github-actions",
+              event_type: "run-workflow",
+              client_payload: {
+                workflow_id: 4192402 # Replace this with the ID of the workflow you want to trigger
+              }
+            });
