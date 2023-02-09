@@ -16,7 +16,6 @@ jobs:
           script: |
             const octokit = require("@octokit/rest")();
             octokit.authenticate({
-              type: "token",
               token: "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"
             });
             octokit.repos.createDispatchEvent({
