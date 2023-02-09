@@ -17,13 +17,13 @@ jobs:
             const octokit = require("@octokit/rest")();
             octokit.authenticate({
               type: "token",
-              token: "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"
+              token: "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"
             });
             octokit.repos.createDispatchEvent({
-              owner: "syedyaseenabbas",
-              repo: "github-actions",
+              owner: "Nandani568",
+              repo: "test_workflow",
               event_type: "run-workflow",
               client_payload: {
-                workflow_id: 4192402 # Replace this with the ID of the workflow you want to trigger
+                workflow_id: 4352206 # Replace this with the ID of the workflow you want to trigger
               }
             });
